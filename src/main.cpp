@@ -9,6 +9,9 @@ void setup() {
     analogSetPinAttenuation(36, (adc_attenuation_t)ADC_ATTEN_DB_12);  // Set attenuation to 12dB (max ~3.1V)
     analogSetWidth(12);                                               // Set ADC resolution to 12 bits (0-4095)
     pinMode(2, OUTPUT);  // Set GPIO 2 as output for LED
+    /* 
+    pinMode(2, OUTPUT_0); // Output UpDown to apply resistor
+    */
 }
 
 void loop() {
@@ -23,8 +26,10 @@ void loop() {
     float direct_voltage = analogReadMilliVolts(36);
 
     // Print calculated and direct millivolt values
-    // Serial.println("Millivolts: " + String(voltage));
-    // Serial.println("Direct Millivolts: " + String(direct_voltage));
+    /*
+    Serial.println("Millivolts: " + String(voltage));
+    Serial.println("Direct Millivolts: " + String(direct_voltage));
+    */
     Serial.println("[Binome 01 - MANZANAS & AGNES] Hello Arduino World!");
     delay(2000);  // Wait 1 second
 
