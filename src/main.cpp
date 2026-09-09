@@ -13,7 +13,7 @@ void setup() {
 void loop() {
     // Read raw ADC value (0-4095)
     int value = analogRead(36);
-    Serial.println("Value: " + String(value));
+    // Serial.println("Value: " + String(value));
 
     // Convert raw value to millivolts (150-3100mV with 11dB or 12dB attenuation with ESP32)
     float voltage = (float)value * (3100.0 - 150.0) / 4095.0 + 150.0;
@@ -22,8 +22,8 @@ void loop() {
     float direct_voltage = analogReadMilliVolts(36);
 
     // Print calculated and direct millivolt values
-    Serial.println("Millivolts: " + String(voltage));
-    Serial.println("Direct Millivolts: " + String(direct_voltage));
-
-    delay(1000);  // Wait 1 second
+    // Serial.println("Millivolts: " + String(voltage));
+    // Serial.println("Direct Millivolts: " + String(direct_voltage));
+    Serial.println("Hello World !");
+    delay(2000);  // Wait 1 second
 }
