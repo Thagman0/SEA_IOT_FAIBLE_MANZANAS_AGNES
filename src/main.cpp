@@ -8,6 +8,7 @@ void setup() {
     // Configure ADC on GPIO 36 (ADC1_CH0)
     analogSetPinAttenuation(36, (adc_attenuation_t)ADC_ATTEN_DB_12);  // Set attenuation to 12dB (max ~3.1V)
     analogSetWidth(12);                                               // Set ADC resolution to 12 bits (0-4095)
+    pinMode(2, OUTPUT);  // Set GPIO 2 as output for LED
 }
 
 void loop() {
@@ -26,4 +27,9 @@ void loop() {
     // Serial.println("Direct Millivolts: " + String(direct_voltage));
     Serial.println("[Binome 01 - MANZANAS & AGNES] Hello Arduino World!");
     delay(2000);  // Wait 1 second
+
+    digitalWrite(2, HIGH);
+    delay(1000);  // Wait 1 second
+    digitalWrite(2, LOW);
+
 }
