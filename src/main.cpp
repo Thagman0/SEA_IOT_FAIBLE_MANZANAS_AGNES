@@ -24,6 +24,6 @@ void loop() {
     // Print calculated and direct millivolt values
     // Serial.println("Millivolts: " + String(voltage));
     // Serial.println("Direct Millivolts: " + String(direct_voltage));
-    Serial.println("Hello World !");
+    Serial.println("[Binome 01 - MANZANAS & AGNES] Hello Arduino World!");
     delay(2000);  // Wait 1 second
 }
