@@ -31,10 +31,13 @@ void loop() {
     Serial.println("Direct Millivolts: " + String(direct_voltage));
     */
     Serial.println("[Binome 01 - MANZANAS & AGNES] Hello Arduino World!");
-    delay(2000);  // Wait 1 second
+    /*
+    delay(2000);  // Wait 2 second
+    */
+    
 
     digitalWrite(2, HIGH);
-    delay(1000);  // Wait 1 second
+    delay(50);  // N * 50 ms = 1 * 50 ms
     digitalWrite(2, LOW);
-
+    delay(1950);  
 }
