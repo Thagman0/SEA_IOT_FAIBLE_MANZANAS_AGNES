@@ -12,9 +12,19 @@ void setup() {
     /* 
     pinMode(2, OUTPUT_0); // Output UpDown to apply resistor
     */
+   pinMode(34, INPUT);  // Set GPIO 34 as input
 }
 
+// 1.4.2.2 Input
+int button_Count = 0;
+int previous_State = HIGH;  // Assuming button is not pressed at start (pull-up resistor)
+const unsigned long debounce_Delay = 30; // Used for debounce
+unsigned long last_Change_Time = 0; // Used for debounce
+int stable_State = HIGH;  // Used for debounce
+
 void loop() {
+    
+
     //1.3.2.2
     //Comment the println when terminal screenshot is not needed in order to keep temporal precision   
     //Serial.println("[Binome 01 - MANZANAS & AGNES] Hello Arduino World!");
@@ -42,15 +52,15 @@ void loop() {
     delay(2000);  // Wait 2 second
     */
     
-    //1.4.2.1
+    //1.4.2.1 Input
     /*
     digitalWrite(2, HIGH);
     delay(50);  // N * 50 ms = 1 * 50 ms
     digitalWrite(2, LOW);
     delay(1950);  
     */
-
-    //1.4.2.2
+    /*
+    //1.4.2.2 Input
     // In this case on morse unit would be 50 ms as described by 50 * N ms = 50 * 1 ms = 50 ms
     //But this timing is to fast so we will mutliply it by 10 to be readable
     // SOS = ... --- ...
@@ -82,4 +92,35 @@ void loop() {
             delay(Morse_Unit);
     }
     delay (7 * Morse_Unit);  // Inter-Word space (7 units)
+    */
+
+    ////1.4.2.2.1 Output
+
+    /* 
+    AI use
+
+    I had issue due to the mechanical effect of the button
+    So i asked IA to help me debug, it suggested me to use a debounce technique 
+    Using the card Timestamp
+    */
+
+    int current_state = digitalRead(34);
+
+    if (current_state != previous_State) {
+        last_Change_Time = millis();
+    }
+
+    if (millis() - last_Change_Time > debounce_Delay) {
+        // Check for debounce
+        if (current_state != stable_State) {
+            // the initial code
+            if (stable_State == LOW && current_state == HIGH) {
+                button_Count++;
+                Serial.println("[Binome 01 - MANZANAS & AGNES] Button Count: " + String(button_Count));
+            }
+            stable_State = current_state;
+        }
+    }
+
+    previous_State = current_state;
 }
