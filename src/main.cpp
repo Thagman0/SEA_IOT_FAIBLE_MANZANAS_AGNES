@@ -15,6 +15,12 @@ void setup() {
 }
 
 void loop() {
+
+    //Comment the println when terminal screenshot is not needed in order to keep temporal precision   
+    //Serial.println("[Binome 01 - MANZANAS & AGNES] Hello Arduino World!");
+
+
+    /*
     // Read raw ADC value (0-4095)
     int value = analogRead(36);
     // Serial.println("Value: " + String(value));
@@ -26,11 +32,12 @@ void loop() {
     float direct_voltage = analogReadMilliVolts(36);
 
     // Print calculated and direct millivolt values
-    /*
+    
     Serial.println("Millivolts: " + String(voltage));
     Serial.println("Direct Millivolts: " + String(direct_voltage));
     */
-    Serial.println("[Binome 01 - MANZANAS & AGNES] Hello Arduino World!");
+   
+    
     /*
     delay(2000);  // Wait 2 second
     */
