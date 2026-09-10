@@ -2,6 +2,17 @@
 // Example of using ADC on ESP32 with Arduino framework
 #include <Arduino.h>
 #include <driver/adc.h>
+// 1.4.2.2 Input
+int button_Count = 0;
+int previous_State = HIGH;  // Assuming button is not pressed at start (pull-up resistor)
+// const unsigned long debounce_Delay = 30; // Used for debounce
+// unsigned long last_Change_Time = 0; // Used for debounce
+// int stable_State = HIGH;  // Used for debounce
+volatile bool button_Flag = false;
+
+void handleButtonInterrupt() {
+    button_Flag = true;
+}
 
 void setup() {
     Serial.begin(115200);
@@ -13,14 +24,10 @@ void setup() {
     pinMode(2, OUTPUT_0); // Output UpDown to apply resistor
     */
    pinMode(34, INPUT);  // Set GPIO 34 as input
+   attachInterrupt(digitalPinToInterrupt(34), handleButtonInterrupt, RISING);  
 }
 
-// 1.4.2.2 Input
-int button_Count = 0;
-int previous_State = HIGH;  // Assuming button is not pressed at start (pull-up resistor)
-const unsigned long debounce_Delay = 30; // Used for debounce
-unsigned long last_Change_Time = 0; // Used for debounce
-int stable_State = HIGH;  // Used for debounce
+
 
 void loop() {
     
@@ -94,6 +101,7 @@ void loop() {
     delay (7 * Morse_Unit);  // Inter-Word space (7 units)
     */
 
+    /*
     ////1.4.2.2.1 Output
 
     /* 
@@ -104,6 +112,7 @@ void loop() {
     Using the card Timestamp
     */
 
+    /*
     int current_state = digitalRead(34);
 
     if (current_state != previous_State) {
@@ -123,4 +132,13 @@ void loop() {
     }
 
     previous_State = current_state;
+    */
+
+
+     ////1.4.2.2.2 Output
+    if (button_Flag) {
+    button_Count++;
+    Serial.println("[Binome 01 - MANZANAS & AGNES] Button Count: " + String(button_Count));
+    button_Flag = false; 
+    }
 }
