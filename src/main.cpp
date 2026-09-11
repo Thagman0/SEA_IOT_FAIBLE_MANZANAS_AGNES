@@ -10,6 +10,11 @@ int previous_State = HIGH;  // Assuming button is not pressed at start (pull-up 
 // int stable_State = HIGH;  // Used for debounce
 volatile bool button_Flag = false;
 
+// 1.5.2.2
+int value = 0;   // the sensor value
+int valueMin = 4095;  // minimum sensor value
+int valueMax = 0;     // maximum sensor value
+
 void handleButtonInterrupt() {
     button_Flag = true;
 }
@@ -25,6 +30,25 @@ void setup() {
     */
    pinMode(34, INPUT);  // Set GPIO 34 as input
    attachInterrupt(digitalPinToInterrupt(34), handleButtonInterrupt, RISING);  
+
+       // LED signal beginning of calibration
+    digitalWrite(2, HIGH);
+    while (millis() < 5000) {
+        // Wait for 5 seconds before starting the ADC readings
+        // Read raw ADC value (0-4095)
+        int value = analogRead(36);
+
+        if (value < valueMin) {
+            valueMin = value;  // Update minimum value
+        }
+
+        if (value > valueMax) {
+            valueMax = value;  // Update maximum value
+        }
+        
+    }
+    // LED signal end of calibration
+    digitalWrite(2, LOW);
 }
 
 
@@ -37,22 +61,7 @@ void loop() {
     //Serial.println("[Binome 01 - MANZANAS & AGNES] Hello Arduino World!");
 
 
-    /*
-    // Read raw ADC value (0-4095)
-    int value = analogRead(36);
-    // Serial.println("Value: " + String(value));
 
-    // Convert raw value to millivolts (150-3100mV with 11dB or 12dB attenuation with ESP32)
-    float voltage = (float)value * (3100.0 - 150.0) / 4095.0 + 150.0;
-
-    // Directly read voltage in millivolts
-    float direct_voltage = analogReadMilliVolts(36);
-
-    // Print calculated and direct millivolt values
-    
-    Serial.println("Millivolts: " + String(voltage));
-    Serial.println("Direct Millivolts: " + String(direct_voltage));
-    */
    
     
     /*
@@ -134,6 +143,7 @@ void loop() {
     previous_State = current_state;
     */
 
+    /*
 
      ////1.4.2.2.2 Output
     if (button_Flag) {
@@ -141,4 +151,14 @@ void loop() {
     Serial.println("[Binome 01 - MANZANAS & AGNES] Button Count: " + String(button_Count));
     button_Flag = false; 
     }
-}
+    */
+
+    //1.5.2
+    int value = analogRead(36);
+    value = constrain(value, valueMin, valueMax);  // Constrain the value to the calibrated range
+    value = map(value, valueMin, valueMax, 0, 255);
+
+    Serial.println("[Binome 01 - MANZANAS & AGNES] Hello Arduino World!");
+    Serial.println(value);
+    delay(1000);
+} 
